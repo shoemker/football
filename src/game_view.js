@@ -1,47 +1,34 @@
 const Game = require("./game");
-const CeCe = require("./cece");
+const Player = require("./player");
 
 
 class GameView {
  
-	constructor(ctx, width, height){
-		this.width = width;
+	constructor(ctx){
+
 		this.ctx = ctx;
-		let map = 1;
-		this.game = new Game(width, height, map);
+		this.game = new Game();
 
-		this.cece = this.game.add(new CeCe);
+		this.Player = this.game.add(new Player);
 
-	}
+	};
 
 
-	openingOff(){
-		this.game.opening = false;
-		this.cece.activateBullySpeech();
-		this.game.message = "Maybe the bouvier could help";
-	}
+
 
 	start() {
 		this.bindKeyHandlers();
-		this.lastTime = 0;
+
 		// start the animation
 		requestAnimationFrame(this.animate.bind(this));
 	};
 
-	animate(time) {
-		const timeDelta = time - this.lastTime;
 
-		if (!this.game.opening) this.game.step(timeDelta);
+	animate() {
 
-		if (this.game.map ===1 && this.cece.pos[0] < 50) {
-			this.game.map = 2;
-			this.cece.map = this.game.b2;
-			this.game.enemies = [];
-			this.game.addEnemies();
-			this.cece.pos = [700, 450];
-		}
+		this.game.step();
+
 		this.game.draw(this.ctx);
-		this.lastTime = time;
 
 		// every call to animate requests causes another call to animate
 		requestAnimationFrame(this.animate.bind(this));
@@ -66,10 +53,7 @@ class GameView {
 		});
 
 		key("space", () => { 
-			// that.cece.attack(); 
-			if (that.cece.fireballUnlocked()) {
-				that.game.launchFireball();
-			}
+
 		});
 	}
 }

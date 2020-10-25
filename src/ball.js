@@ -1,6 +1,6 @@
 const MovingObject = require("./moving_object");
 
-class Fireball extends MovingObject {
+class Ball extends MovingObject {
 
 	constructor(options) {
 		super(options);
@@ -16,13 +16,13 @@ class Fireball extends MovingObject {
 
 	}
 
-	move(timeDelta) {
+	move() {
 		// debugger
-		this.pos[0] += this.vel[0]*timeDelta;
-		this.pos[1] += this.vel[1]*timeDelta;
+		this.pos[0] += this.vel[0];
+		this.pos[1] += this.vel[1];
 	}
 
 
 }
 
-module.exports = Fireball;
+module.exports = Ball;
